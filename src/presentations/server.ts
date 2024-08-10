@@ -2,6 +2,7 @@ import express, { Router } from "express";
 import compression from "compression";
 import helmet from "helmet";
 import cors from "cors";
+import mogan from "morgan";
 import { WinstonAdapter } from "../config"
 
 interface ServerOptions {
@@ -32,7 +33,7 @@ export class Server {
       );
       next();
     });
-    this.app.use((req, res, next) => {
+    this.app.use((req, _, next) => {
       console.log(`Request made to ${req.url}`);
       next();
     });
@@ -54,6 +55,7 @@ export class Server {
         ],
       })
     );
+    this.app.use(mogan("dev")); 
 
     this.app.use(this.router);
     this.app.listen(this.port, () => {
