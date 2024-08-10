@@ -4,14 +4,21 @@ dotenv.config();
 
 interface IEnvsVars {
   PORT: number;
-  NODE_ENV: string;
+  TS_NODE_DEV: boolean;
   JWT_SECRET: string;
+  STORJ_S3_ACCESS_KEY: string;
+  STORJ_S3_SECRET_KEY: string;
+  STORJ_GATEWAY_ENDPOINT: string;
 }
 
 const envsSchemas = joi
   .object<IEnvsVars>({
     PORT: joi.number().required().default(8080),
-    JWT_SECRET: joi.string().required()
+    TS_NODE_DEV: joi.boolean().required(),
+    JWT_SECRET: joi.string().required(),
+    STORJ_S3_ACCESS_KEY: joi.string().required(),
+    STORJ_S3_SECRET_KEY: joi.string().required(),
+    STORJ_GATEWAY_ENDPOINT: joi.string().required(),
   })
   .unknown(true);
 
@@ -27,6 +34,9 @@ const envsVar: IEnvsVars = value;
 
 export const envs = {
   PORT: envsVar.PORT,
-  NODE_ENV: envsVar.NODE_ENV,
+  TS_NODE_DEV: envsVar.TS_NODE_DEV,
   JWT_SECRET: envsVar.JWT_SECRET,
+  STORJ_S3_ACCESS_KEY: envsVar.STORJ_S3_ACCESS_KEY,
+  STORJ_S3_SECRET_KEY: envsVar.STORJ_S3_SECRET_KEY,
+  STORJ_GATEWAY_ENDPOINT: envsVar.STORJ_GATEWAY_ENDPOINT,
 };
