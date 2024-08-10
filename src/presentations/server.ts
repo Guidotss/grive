@@ -33,10 +33,6 @@ export class Server {
       );
       next();
     });
-    this.app.use((req, _, next) => {
-      console.log(`Request made to ${req.url}`);
-      next();
-    });
     this.app.use(compression());
     this.app.use(
       helmet({
@@ -56,8 +52,8 @@ export class Server {
       })
     );
     this.app.use(mogan("dev")); 
+    this.app.use("/api/v1",this.router);
 
-    this.app.use(this.router);
     this.app.listen(this.port, () => {
       this.logger.info(`Server is running on port ${this.port}`);
     });

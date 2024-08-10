@@ -1,5 +1,6 @@
 import AWS from "aws-sdk";
 import { envs } from "../envs";
+import { UploadFileDto } from "../../domain/dtos";
 
 export class S3Adapter {
   private readonly s3 = new AWS.S3({
@@ -7,10 +8,11 @@ export class S3Adapter {
     secretAccessKey: envs.STORJ_S3_SECRET_KEY,
     endpoint: envs.STORJ_GATEWAY_ENDPOINT,
     s3ForcePathStyle: true,
-    signatureVersion: "v4",
   });
 
-  public async uploadFile(file: Express.Multer.File): Promise<string> {
+  public async uploadFile(
+    file: UploadFileDto
+  ): Promise<{ location: string; key: string }> {
     const params = {
       Bucket: "grive",
       Key: file.originalname,
@@ -18,7 +20,11 @@ export class S3Adapter {
     };
 
     const { Location } = await this.s3.upload(params).promise();
-    return Location;
+
+    return {
+      location: Location,
+      key: file.originalname,
+    };
   }
 
   public async deleteFile(key: string): Promise<void> {

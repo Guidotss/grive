@@ -7,10 +7,9 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Video {
+model File {
   id          String   @id @default(auto()) @map("_id") @db.ObjectId
   title       String
-  description String
   url         String
   key         String
   createdAt   DateTime @default(now())

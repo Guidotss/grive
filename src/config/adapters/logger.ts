@@ -9,7 +9,7 @@ export class WinstonAdapter {
         ({ timestamp, level, message }) => `${timestamp} ${level}: ${message}`
       )
     ),
-
+    levels: winston.config.npm.levels,
     defaultMeta: { service: "GRIVE" },
     transports: [
       new winston.transports.Console(),
