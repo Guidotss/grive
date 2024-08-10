@@ -7,7 +7,7 @@ import {
 import { FilesController } from "./controller";
 
 export class FilesRoutes {
-  static get routes() {
+  public static get routes(): Router {
     const router = Router();
     const upload = MulterAdapter.getMulter();
     const filesDataSource = new FilesDataSourceImpl();
