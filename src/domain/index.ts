@@ -9,3 +9,6 @@ export * from './errors';
 
 //ENTITIES
 export * from './entities';
+
+//DTOS
+export * from './dtos';

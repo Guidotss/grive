@@ -9,22 +9,18 @@ export class S3Adapter {
     endpoint: envs.STORJ_GATEWAY_ENDPOINT,
     s3ForcePathStyle: true,
   });
+  static sharedUrl = envs.STORJ_SHARED_ENDPOINT;
 
   public async uploadFile(
     file: UploadFileDto
-  ): Promise<{ location: string; key: string }> {
+  ): Promise<AWS.S3.ManagedUpload.SendData> {
     const params = {
       Bucket: "grive",
       Key: file.originalname,
       Body: file.buffer,
     };
-
-    const { Location } = await this.s3.upload(params).promise();
-
-    return {
-      location: Location,
-      key: file.originalname,
-    };
+    const resp = await this.s3.upload(params).promise();
+    return resp;
   }
 
   public async deleteFile(key: string): Promise<void> {

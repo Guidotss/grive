@@ -1,5 +1,6 @@
 export class UploadFileDto {
   constructor(
+    public readonly userId: string,
     public readonly fieldname: string,
     public readonly mimetype: string,
     public readonly originalname: string,
@@ -12,11 +13,13 @@ export class UploadFileDto {
   }
 
   public static create(data: any): [string[]?, UploadFileDto?] {
-    console.log(data);
-    const { fieldname, mimetype, buffer, originalname } = data;
+    const { fieldname, mimetype, buffer, originalname, userId } = data;
     const errors = [];
     if (!fieldname) {
       errors.push("Fieldname is required");
+    }
+    if (!userId) {
+      errors.push("UserId is required");
     }
     if (!mimetype) {
       errors.push("Mimetype is required");
@@ -44,7 +47,7 @@ export class UploadFileDto {
     }
     return [
       undefined,
-      new UploadFileDto(fieldname, mimetype, originalname, buffer),
+      new UploadFileDto(userId, fieldname, mimetype, originalname, buffer),
     ];
   }
 }

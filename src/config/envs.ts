@@ -9,6 +9,7 @@ interface IEnvsVars {
   STORJ_S3_ACCESS_KEY: string;
   STORJ_S3_SECRET_KEY: string;
   STORJ_GATEWAY_ENDPOINT: string;
+  STORJ_SHARED_ENDPOINT: string;
 }
 
 const envsSchemas = joi
@@ -19,6 +20,7 @@ const envsSchemas = joi
     STORJ_S3_ACCESS_KEY: joi.string().required(),
     STORJ_S3_SECRET_KEY: joi.string().required(),
     STORJ_GATEWAY_ENDPOINT: joi.string().required(),
+    STORJ_SHARED_ENDPOINT: joi.string().required(),
   })
   .unknown(true);
 
@@ -39,4 +41,5 @@ export const envs = {
   STORJ_S3_ACCESS_KEY: envsVar.STORJ_S3_ACCESS_KEY,
   STORJ_S3_SECRET_KEY: envsVar.STORJ_S3_SECRET_KEY,
   STORJ_GATEWAY_ENDPOINT: envsVar.STORJ_GATEWAY_ENDPOINT,
+  STORJ_SHARED_ENDPOINT: envsVar.STORJ_SHARED_ENDPOINT,
 };

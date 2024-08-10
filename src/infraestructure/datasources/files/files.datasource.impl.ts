@@ -9,11 +9,13 @@ export class FilesDataSourceImpl implements FilesDataSource {
   async uploadFile(file: UploadFileDto): Promise<FileEntity> {
     try {
       const fileData = await this.s3Adapter.uploadFile(file);
+      console.log(fileData);
       const newFile = await this.filesClient.create({
         data: {
-          key: fileData.key,
+          key: fileData.Key,
           title: file.originalname,
-          url: fileData.location,
+          url: S3Adapter.sharedUrl + `/${fileData.Key}`,
+          userId: file.userId, 
         },
       });
       const fileEntity = FileEntity.fromObject(newFile);

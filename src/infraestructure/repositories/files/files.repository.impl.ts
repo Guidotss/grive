@@ -1,8 +1,8 @@
-import { FilesRepository, FilesDataSource, FileEntity } from "../../../domain";
+import { FilesRepository, FilesDataSource, FileEntity, UploadFileDto } from "../../../domain";
 
 export class FilesRepositoryImpl implements FilesRepository {
   constructor(private readonly filesDataSource: FilesDataSource) {}
-  uploadFile(file: Express.Multer.File): Promise<FileEntity> {
+  uploadFile(file: UploadFileDto): Promise<FileEntity> {
     return this.filesDataSource.uploadFile(file);
   }
   getFileUrl(key: string): Promise<string> {
