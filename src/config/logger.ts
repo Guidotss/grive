@@ -9,6 +9,7 @@ export class WinstonAdapter {
         ({ timestamp, level, message }) => `${timestamp} ${level}: ${message}`
       )
     ),
+
     defaultMeta: { service: "GRIVE" },
     transports: [
       new winston.transports.Console(),
@@ -24,10 +25,10 @@ export class WinstonAdapter {
   });
 
   public info(message: string): void {
-    this.logger.info(`${new Date().toISOString()} ${message}`);
+    this.logger.info(message);
   }
 
   public error(message: string): void {
-    this.logger.error(`${new Date().toISOString()} ${message}`);
+    this.logger.error(message);
   }
 }
