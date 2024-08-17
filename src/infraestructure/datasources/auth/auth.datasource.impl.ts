@@ -59,6 +59,7 @@ export class AuthDataSourceImpl implements AuthDataSource {
     const newUser = await this.userClient.create({
       data: {
         name: registerDto.name,
+        lastName: registerDto.lastName,
         email: registerDto.email,
         password: hashedPassword,
       },
