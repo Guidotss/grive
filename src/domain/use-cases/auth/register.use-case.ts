@@ -27,6 +27,7 @@ export class RegisterUseCase implements IRegisterUseCase {
       user: {
         id: user.id,
         name: user.name,
+        lastName: user.lastName,
         email: user.email,
       },
     };

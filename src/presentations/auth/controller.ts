@@ -20,13 +20,19 @@ export class AuthController {
       });
     }
     this.logger.error((error as Error).message);
-    return res.status(500).send("Internal server error");
+    return res.status(500).json({
+      ok: false,
+      message: "Internal server error",
+    });
   }
 
   public register = (req: Request, res: Response) => {
     const [errors, registerDto] = RegisterDto.create(req.body);
     if (errors) {
-      return res.status(400).send(errors);
+      return res.status(400).json({
+        ok: false,
+        message: errors,
+      });
     }
     new RegisterUseCase(this.authRepository)
       .execute(registerDto!)
@@ -37,7 +43,10 @@ export class AuthController {
   public login = (req: Request, res: Response) => {
     const [errors, loginDto] = LoginDto.create(req.body);
     if (errors) {
-      return res.status(400).send(errors);
+      return res.status(400).json({
+        ok: false,
+        message: errors,
+      });
     }
     new LoginUseCase(this.authRepository)
       .execute(loginDto!)
@@ -46,7 +55,7 @@ export class AuthController {
   };
 
   public refreshToken = (req: Request, res: Response) => {
-    const token = req.headers.authorization?.split(" ")[1];
+    const token = req.cookies.token; 
     if (!token) {
       return res.status(400).json({
         ok: false,
@@ -55,7 +64,7 @@ export class AuthController {
     }
     new RefreshTokenUseCase(this.authRepository)
       .execute(token)
-      .then((response) => res.status(200).send(response))
+      .then((response) => res.status(200).json(response))
       .catch((error) => this.handleError(error, res));
   };
 }

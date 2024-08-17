@@ -19,6 +19,10 @@ export class RegisterDto {
       return ["Password is required", undefined];
     }
 
+    if (!lastName) {
+      return ["Last name is required", undefined];
+    }
+
     if (!name) {
       return ["Name is required", undefined];
     }

@@ -4,6 +4,7 @@ export type CustomAuthReponse = {
   user: {
     id: string;
     name: string;
+    lastName: string; 
     email: string;
   };
 };

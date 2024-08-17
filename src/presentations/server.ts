@@ -3,6 +3,7 @@ import compression from "compression";
 import helmet from "helmet";
 import cors from "cors";
 import mogan from "morgan";
+import cookiePaser from "cookie-parser";
 import { WinstonAdapter } from "../config"
 
 interface ServerOptions {
@@ -41,7 +42,9 @@ export class Server {
     );
     this.app.use(
       cors({
-        origin: "*",
+        origin: [
+          "http://localhost:3000",
+        ], 
         methods: ["GET", "POST", "PUT", "DELETE"],
         allowedHeaders: [
           "Origin",
@@ -49,8 +52,11 @@ export class Server {
           "Content-Type",
           "Accept",
         ],
+        credentials: true,
+        maxAge: 3600,
       })
     );
+    this.app.use(cookiePaser());
     this.app.use(mogan("dev")); 
     this.app.use("/api/v1",this.router);
 

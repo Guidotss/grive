@@ -33,6 +33,7 @@ export class RefreshTokenUseCase implements IRegfreshTokenUseCase {
         id: user.id,
         name: user.name,
         email: user.email,
+        lastName: user.lastName,
       },
     };
   }

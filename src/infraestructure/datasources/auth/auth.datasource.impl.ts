@@ -39,7 +39,7 @@ export class AuthDataSourceImpl implements AuthDataSource {
   async login(loginDto: LoginDto): Promise<UserEntity> {
     const { email, password } = loginDto;
     const user = await this.getUserByEmail(email);
-    console.log("user", user);
+
     if (!this.bcryptAdapter.compare(password, user.password)) {
       throw new CustomError(401, "Invalid credentials");
     }
@@ -52,6 +52,7 @@ export class AuthDataSourceImpl implements AuthDataSource {
         email,
       },
     });
+
     if (user) {
       throw new CustomError(409, "User already exists");
     }
