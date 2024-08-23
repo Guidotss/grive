@@ -2,8 +2,8 @@ import { FilesRepository, FilesDataSource, FileEntity, UploadFileDto } from "../
 
 export class FilesRepositoryImpl implements FilesRepository {
   constructor(private readonly filesDataSource: FilesDataSource) {}
-  uploadFile(file: UploadFileDto): Promise<FileEntity> {
-    return this.filesDataSource.uploadFile(file);
+  uploadFile(file: UploadFileDto, userId: string): Promise<FileEntity> {
+    return this.filesDataSource.uploadFile(file, userId);
   }
   getFileUrl(key: string): Promise<string> {
     throw new Error("Method not implemented.");

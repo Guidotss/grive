@@ -4,10 +4,11 @@ import {
   CustomError,
   LoginDto,
   RegisterDto,
+  LoginUseCase,
+  RegisterUseCase, 
+  RefreshTokenUseCase, 
 } from "../../domain";
-import { WinstonAdapter } from "../../config";
-import { LoginUseCase, RegisterUseCase } from "../../domain/use-cases";
-import { RefreshTokenUseCase } from "../../domain/use-cases/auth/refresh-token.use-case";
+import { WinstonAdapter } from "../../config"; 
 
 export class AuthController {
   private readonly logger = new WinstonAdapter();

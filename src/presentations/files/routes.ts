@@ -14,11 +14,7 @@ export class FilesRoutes {
     const filesRepository = new FilesRepositoryImpl(filesDataSource);
     const filesController = new FilesController(filesRepository);
 
-    router.post(
-      "/upload/:userId",
-      upload.single("file"),
-      filesController.uploadFile
-    );
+    router.post("/upload", upload.single("file"), filesController.uploadFile);
 
     return router;
   }

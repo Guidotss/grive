@@ -12,3 +12,6 @@ export * from './entities';
 
 //DTOS
 export * from './dtos';
+
+//USE CASES
+export * from './use-cases';

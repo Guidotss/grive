@@ -10,6 +10,10 @@ post {
   auth: none
 }
 
+headers {
+  Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NmMxMDZlY2E1NTBkMGFlMDg1NWU2ZmMiLCJpYXQiOjE3MjQ0NDM0NTgsImV4cCI6MTcyNDUyOTg1OH0.W3ju5c2uf9bVAXuyVv9R8koPaQnInuQev27DYoCo6Vo;
+}
+
 body:multipart-form {
   file: @file(/Users/guido/Desktop/Captura de pantalla 2024-08-23 a la(s) 5.39.40 p. m..png)
 }

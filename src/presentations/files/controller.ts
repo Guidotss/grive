@@ -1,6 +1,10 @@
-import { CustomError, FilesRepository } from "../../domain";
 import { Response, Request } from "express";
-import { UploadFileDto } from "../../domain/dtos";
+import {
+  CustomError,
+  FilesRepository,
+  UploadFileDto,
+  UploadFilesUseCase,
+} from "../../domain";
 import { WinstonAdapter } from "../../config";
 
 export class FilesController {
@@ -22,19 +26,21 @@ export class FilesController {
     });
   }
 
-  public uploadFile = async (req: Request, res: Response) => {
-    const [errors, uploadFileDto] = UploadFileDto.create(req.file);
+  public uploadFile = (req: Request, res: Response) => {
+    const token = req.cookies.token;
+    if (!token) {
+      return res.status(400).json({
+        ok: false,
+        message: "Token is required",
+      });
+    }
+    const [errors, uploadFileDto] = UploadFileDto.create({ ...req.file });
     if (errors) return res.status(400).json({ message: errors });
     try {
-      const result = await this.filesRepository.uploadFile(uploadFileDto!);
-      return res.status(201).json({
-        ok: true,
-        message: "File uploaded successfully",
-        data: {
-          url: result.url,
-          id: result.id,
-        },
-      });
+      new UploadFilesUseCase(this.filesRepository!)
+        .execute(uploadFileDto!, token)
+        .then((response) => res.status(201).send(response))
+        .catch((error) => this.handleErorr(error, res));
     } catch (error) {
       this.handleErorr(error, res);
     }
