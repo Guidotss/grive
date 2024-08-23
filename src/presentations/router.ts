@@ -11,7 +11,9 @@ export class AppRoutes {
     router.use("/health", (_, res) => {
       return res.status(200).json({ ok: true, message: "Server is running" });
     });
-
+    router.use((_, res) => {
+      return res.status(404).json({ ok: false, message: "Resource Not Found" });
+    });
     return router;
   }
 }
