@@ -1,4 +1,4 @@
-import { JwtAdapter } from "../../../config/adapters/jwt";
+import { JwtAdapter } from "../../../config";
 import { UploadFileDto } from "../../dtos";
 import { CustomError } from "../../errors";
 import { FilesRepository } from "../../repositories";

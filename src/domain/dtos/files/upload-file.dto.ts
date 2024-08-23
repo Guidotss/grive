@@ -28,7 +28,9 @@ export class UploadFileDto {
     if (
       mimetype !== "image/jpeg" &&
       mimetype !== "image/png" &&
-      mimetype !== "video/mp4"
+      mimetype !== "video/mp4" &&
+      mimetype !== "application/pdf" &&
+      mimetype !== "application/msword"
     ) {
       console.log(mimetype);
       errors.push("Invalid mimetype");

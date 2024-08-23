@@ -14,6 +14,7 @@ export class FilesRoutes {
     const filesRepository = new FilesRepositoryImpl(filesDataSource);
     const filesController = new FilesController(filesRepository);
 
+    router.get("/", filesController.getFiles);
     router.post("/upload", upload.single("file"), filesController.uploadFile);
 
     return router;

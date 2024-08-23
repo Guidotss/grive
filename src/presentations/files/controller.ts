@@ -2,6 +2,7 @@ import { Response, Request } from "express";
 import {
   CustomError,
   FilesRepository,
+  GetFilesUseCase,
   UploadFileDto,
   UploadFilesUseCase,
 } from "../../domain";
@@ -44,5 +45,19 @@ export class FilesController {
     } catch (error) {
       this.handleErorr(error, res);
     }
+  };
+
+  public getFiles = (req: Request, res: Response) => {
+    const token = req.cookies.token;
+    if (!token) {
+      return res.status(400).json({
+        ok: false,
+        message: "Token is required",
+      });
+    }
+    new GetFilesUseCase(this.filesRepository!)
+      .execute(token)
+      .then((response) => res.status(200).send(response))
+      .catch((error) => this.handleErorr(error, res));
   };
 }
