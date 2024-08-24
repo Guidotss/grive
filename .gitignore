@@ -1,6 +1,9 @@
 node_modules
 logs
 
-
+# local env files
 *.lock
 .env
+
+# build files
+redis_data
