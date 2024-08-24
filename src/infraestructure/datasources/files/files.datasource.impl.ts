@@ -1,17 +1,26 @@
-import { S3Adapter } from "../../../config";
+import { RedisAdapter, S3Adapter } from "../../../config";
 import { filesClient } from "../../../data/mongo";
 import { FilesDataSource, FileEntity, CustomError } from "../../../domain";
 import { UploadFileDto } from "../../../domain/dtos";
 
 export class FilesDataSourceImpl implements FilesDataSource {
   private readonly filesClient = filesClient;
+  private readonly redisAdapter = RedisAdapter;
+
   constructor(private readonly s3Adapter = new S3Adapter()) {}
   async getFiles(userId: string): Promise<FileEntity[]> {
+    const cachedFiles = await this.redisAdapter.get(userId);
+    if (cachedFiles) {
+      return JSON.parse(cachedFiles).map((file: any) =>
+        FileEntity.fromObject(file)
+      );
+    }
     const files = await this.filesClient.findMany({
       where: {
         userId,
       },
     });
+    this.redisAdapter.set(userId, JSON.stringify(files));
     return files.map((file) => FileEntity.fromObject(file));
   }
   async uploadFile(file: UploadFileDto, userId: string): Promise<FileEntity> {
@@ -25,7 +34,14 @@ export class FilesDataSourceImpl implements FilesDataSource {
           userId,
         },
       });
+      const cachedFiles = await this.redisAdapter.get(userId);
+      if (cachedFiles) {
+        const files = JSON.parse(cachedFiles);
+        files.push(newFile);
+        this.redisAdapter.set(userId, JSON.stringify(files));
+      }
       const fileEntity = FileEntity.fromObject(newFile);
+      
       return fileEntity;
     } catch (error) {
       console.log(error);
