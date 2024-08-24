@@ -39,6 +39,5 @@ export class UploadFilesUseCase implements IUploadFilesUseCase {
         id: result.id,
       },
     };
-    console.log(userId);
   }
 }

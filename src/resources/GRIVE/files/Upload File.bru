@@ -1,5 +1,5 @@
 meta {
-  name: upload-file
+  name: Upload File
   type: http
   seq: 1
 }
@@ -8,6 +8,10 @@ post {
   url: {{url}}/files/upload
   body: multipartForm
   auth: none
+}
+
+params:query {
+  : 
 }
 
 headers {

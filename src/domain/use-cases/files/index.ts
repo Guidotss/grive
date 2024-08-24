@@ -1,2 +1,2 @@
 export * from "./upload-files.use-case";
-export * from "./get-files.dto";
+export * from "./get-files.use-case";

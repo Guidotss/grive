@@ -24,7 +24,10 @@ export class FilesDataSourceImpl implements FilesDataSource {
       this.logger.error(
         `Error fetching file type for category ${category}: ${error}`
       );
-      throw new CustomError(500, `Error retrieving file type for category: ${category}`);
+      throw new CustomError(
+        500,
+        `Error retrieving file type for category: ${category}`
+      );
     }
   }
 
@@ -45,7 +48,14 @@ export class FilesDataSourceImpl implements FilesDataSource {
     }
 
     const files = await this.filesClient.findMany({
-      where: { userId },
+      where: {
+        userId,
+      },
+      include: {
+        fileType: {
+          select: { id: true, category: true },
+        },
+      },
     });
 
     await this.cacheFiles(userId, files);
@@ -71,6 +81,11 @@ export class FilesDataSourceImpl implements FilesDataSource {
         url: `${S3Adapter.sharedUrl}/${fileData.Key}`,
         userId,
         fileTypeId: filetype.id,
+      },
+      include: {
+        fileType: {
+          select: { id: true, category: true },
+        },
       },
     });
 

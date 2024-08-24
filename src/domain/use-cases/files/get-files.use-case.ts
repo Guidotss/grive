@@ -14,7 +14,12 @@ interface GetFilesDto {
 interface CustomResponse {
   ok: boolean;
   message: string;
-  data: GetFilesDto[];
+  data: {
+    videos: number;
+    images: number;
+    documents: number;
+    files: GetFilesDto[];
+  };
 }
 
 interface IGetFilesUseCase {
@@ -23,6 +28,11 @@ interface IGetFilesUseCase {
 
 export class GetFilesUseCase implements IGetFilesUseCase {
   private readonly verifyToken: VerifyToken = JwtAdapter.verify;
+  private readonly categoryMap: Record<string, string> = {
+    video: "videos",
+    image: "images",
+    document: "documents",
+  };
   constructor(private readonly filesRepository: FilesRepository) {}
 
   async execute(token: string): Promise<CustomResponse> {
@@ -35,10 +45,24 @@ export class GetFilesUseCase implements IGetFilesUseCase {
     }
     const files = await this.filesRepository.getFiles(userId);
 
+    const filesCountedByCategory = files.reduce(
+      (acc, { fileType }) => {
+        const categoryKey = this.categoryMap[fileType.category];
+        if (categoryKey) {
+          acc[categoryKey as keyof typeof acc]++;
+        }
+        return acc;
+      },
+      { videos: 0, images: 0, documents: 0 }
+    );
+
     return {
       ok: true,
       message: "Files fetched successfully",
-      data: files,
+      data: {
+        files,
+        ...filesCountedByCategory,
+      },
     };
   }
 }

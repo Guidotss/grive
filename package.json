@@ -4,7 +4,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "ts-node-dev --respawn --transpile-only src/app.ts --ignore-watch node_modules"
+    "dev": "ts-node-dev --respawn --transpile-only src/app.ts --ignore-watch node_modules",
+    "start:upload-categories": "ts-node-dev --respawn --transpile-only src/data/mongo/upload-files-categories.ts --ignore-watch node_modules"
   },
   "keywords": [],
   "author": "",
