@@ -14,6 +14,7 @@ export class FilesController {
 
   private handleErorr(error: unknown, res: Response) {
     if (error instanceof CustomError) {
+      this.logger.error(error.message);
       return res.status(error.statusCode).json({
         ok: false,
         message: error.message,

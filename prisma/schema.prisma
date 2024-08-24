@@ -7,15 +7,26 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model File {
+model FileType {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  title     String
-  url       String
-  key       String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  userId    String   @db.ObjectId
-  user      User     @relation(fields: [userId], references: [id])
+  category  String
+  mimeTypes String[]
+  files     File[]
+
+  @@index([category], name: "category")
+}
+
+model File {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  title      String
+  url        String
+  key        String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  userId     String   @db.ObjectId
+  user       User     @relation(fields: [userId], references: [id])
+  fileTypeId String   @db.ObjectId
+  fileType   FileType @relation(fields: [fileTypeId], references: [id])
 }
 
 model User {
