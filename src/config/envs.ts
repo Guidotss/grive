@@ -10,6 +10,8 @@ interface IEnvsVars {
   STORJ_S3_SECRET_KEY: string;
   STORJ_GATEWAY_ENDPOINT: string;
   STORJ_SHARED_ENDPOINT: string;
+  REDIS_HOST: string;
+  REDIS_PORT: number;
 }
 
 const envsSchemas = joi
@@ -21,6 +23,8 @@ const envsSchemas = joi
     STORJ_S3_SECRET_KEY: joi.string().required(),
     STORJ_GATEWAY_ENDPOINT: joi.string().required(),
     STORJ_SHARED_ENDPOINT: joi.string().required(),
+    REDIS_HOST: joi.string().required().default("localhost"),
+    REDIS_PORT: joi.number().required().default(6379),
   })
   .unknown(true);
 
@@ -42,4 +46,6 @@ export const envs = {
   STORJ_S3_SECRET_KEY: envsVar.STORJ_S3_SECRET_KEY,
   STORJ_GATEWAY_ENDPOINT: envsVar.STORJ_GATEWAY_ENDPOINT,
   STORJ_SHARED_ENDPOINT: envsVar.STORJ_SHARED_ENDPOINT,
+  REDIS_HOST: envsVar.REDIS_HOST,
+  REDIS_PORT: envsVar.REDIS_PORT,
 };
