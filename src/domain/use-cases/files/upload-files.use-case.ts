@@ -4,13 +4,19 @@ import { CustomError } from "../../errors";
 import { FilesRepository } from "../../repositories";
 import { VerifyToken } from "../../types";
 
+
+interface UploadFilesDto {
+  title: string;
+  url: string;
+  key: string;
+  createdAt: Date;
+  updatedAt: Date;
+  userId: string;
+}
 interface CustomResponse {
   ok: boolean;
   message: string;
-  data: {
-    url: string;
-    id: string;
-  };
+  data: UploadFilesDto
 }
 interface IUploadFilesUseCase {
   execute(uploadFileDto: UploadFileDto, token: string): Promise<CustomResponse>;
@@ -35,8 +41,7 @@ export class UploadFilesUseCase implements IUploadFilesUseCase {
       ok: true,
       message: "File uploaded successfully",
       data: {
-        url: result.url,
-        id: result.id,
+        ...result, 
       },
     };
   }

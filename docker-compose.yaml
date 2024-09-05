@@ -1,0 +1,23 @@
+version: '3.8'
+services:
+  grive-bakend: 
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    container_name: grive-back
+    volumes: 
+      - .:/app
+    ports: 
+      - "8080:8080"
+    environment:
+      - PORT=${PORT}
+      - TS_NODE_DEV=false
+      - JWT_SECRET=${JWT_SECRET}
+      - STORJ_S3_ACCESS_KEY=${STORJ_S3_ACCESS_KEY}
+      - STORJ_S3_SECRET_KEY=${STORJ_S3_SECRET_KEY}
+      - STORJ_GATEWAY_ENDPOINT=${STORJ_GATEWAY_ENDPOINT}
+      - STORJ_SHARED_ENDPOINT=${STORJ_SHARED_ENDPOINT}
+      - DATABASE_URL=${DATABASE_URL}
+      - REDIS_HOST=${REDIS_HOST}
+      - REDIS_PORT=${REDIS_PORT}
+    restart: always

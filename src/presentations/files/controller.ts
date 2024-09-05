@@ -36,6 +36,7 @@ export class FilesController {
         message: "Token is required",
       });
     }
+
     const [errors, uploadFileDto] = UploadFileDto.create({ ...req.file });
     if (errors) return res.status(400).json({ message: errors });
     try {

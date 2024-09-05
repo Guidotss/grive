@@ -29,6 +29,7 @@ const envsSchemas = joi
   .unknown(true);
 
 const { error, value } = envsSchemas.validate(process.env, {
+  convert: true,
   abortEarly: false,
 });
 
