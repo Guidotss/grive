@@ -24,6 +24,7 @@ export class Server {
 
   public async start(): Promise<void> {
     this.app.use(express.raw());
+    this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: true }));
     this.app.use((_, res, next) => {
       res.header("Access-Control-Allow-Origin", "*");
